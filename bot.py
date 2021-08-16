@@ -1,0 +1,43 @@
+import discord
+from discord.ext import commands
+from mcstatus import MinecraftServer
+from datetime import datetime
+import asyncio
+
+bot = commands.Bot(command_prefix='pog ')
+server_ip = "" # ENTER DESIRED SERVER IP HERE
+server = MinecraftServer.lookup(server_ip) #poggerchair IP: 95.142.162.123:25565
+
+async def request():
+    while True:
+        status = server.status()
+        now = datetime.now()
+        current_time = now.strftime("%H:%M:%S")
+        status = server.status()
+        channel = bot.get_channel() # ENTER YOUR CHANNEL ID HERE
+        await channel.edit(topic=str("{0}/20 players online | Last Edited at {1} EST".format(status.players.online, current_time)), reason="Automatic Edit: Player Count Changed")
+        print("The server has {0} players and replied in {1} ms".format(status.players.online, status.latency))
+        await asyncio.sleep(300)
+
+@bot.event
+async def on_ready():
+    print('Logged in as')
+    print(bot.user.name)
+    print(bot.user.id)
+    print('------')
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name='poggerchair'))
+    await request()
+
+@bot.command()
+async def ping(ctx):
+    await ctx.send(":ping_pong: Pong!")
+
+@bot.command()
+async def playerCount(ctx):
+        server = MinecraftServer.lookup(server_ip) #poggerchair IP: 95.142.162.123:25565
+        status = server.status()
+        await ctx.send("The server has {0} players and replied in {1} ms".format(status.players.online, status.latency))
+        print("The server has {0} players and replied in {1} ms".format(status.players.online, status.latency))       
+
+TOKEN = "" # ENTER YOUR BOT TOKEN HERE
+bot.run(TOKEN)
