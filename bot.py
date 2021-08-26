@@ -62,7 +62,7 @@ async def players(ctx):
         description = "There is currently {0} player(s) online.".format(status.players.online),
         color = discord.Color.from_rgb(255, 103, 76))
 
-    embed.set_footer(text='{0} EST | PogBot is a project by @SharkBaitBilly#5270'.format(datetime_NY.strftime("%H:%M:%S")))
+    embed.set_footer(text='{0} | PogBot is a project by @SharkBaitBilly#5270'.format(datetime_NY.strftime("%H:%M:%S")))
     embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/876187825995919410/879860894258044948/pogbot.png')
     #embed.set_author(name='Bot Template',
     #icon_url='')
