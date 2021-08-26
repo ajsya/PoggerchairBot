@@ -66,8 +66,9 @@ async def players(ctx):
     #icon_url='')
     embed.add_field(name='Player Count', value="{0}/20".format(status.players.online), inline=True)
     embed.add_field(name='Ping', value=status.latency, inline=True)
-    embed.add_field(name='Player List', value="\n ".join(query.players.names), inline=False)
-    await ctx.send(embed=embed)        
+    if status.players.online > 0:
+        embed.add_field(name='Player List', value="\n ".join(query.players.names), inline=False)
+    await ctx.send(embed=embed)    
 
 TOKEN = os.getenv("TOKEN")
 bot.run(TOKEN)
