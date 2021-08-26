@@ -55,12 +55,14 @@ async def players(ctx):
     server = MinecraftServer.lookup(server_ip) #poggerchair IP: 95.142.162.123:25565
     status = server.status()
     query = server.query()
+    tz_NY = pytz.timezone('America/New_York') 
+    datetime_NY = datetime.now(tz_NY)
     embed = discord.Embed(
         title = 'Poggerchair',
         description = "There is currently {0} player(s) online.".format(status.players.online),
         color = discord.Color.from_rgb(255, 103, 76))
 
-    embed.set_footer(text='PogBot is a project by @SharkBaitBilly#5270')
+    embed.set_footer(text='{0} EST | PogBot is a project by @SharkBaitBilly#5270'.format(datetime_NY.strftime("%H:%M:%S")))
     embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/876187825995919410/879860894258044948/pogbot.png')
     #embed.set_author(name='Bot Template',
     #icon_url='')
@@ -68,7 +70,7 @@ async def players(ctx):
     embed.add_field(name='Ping', value=status.latency, inline=True)
     if status.players.online > 0:
         embed.add_field(name='Player List', value="\n ".join(query.players.names), inline=False)
-    await ctx.send(embed=embed)    
+    await ctx.send(embed=embed)     
 
 TOKEN = os.getenv("TOKEN")
 bot.run(TOKEN)
