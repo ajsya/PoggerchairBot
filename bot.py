@@ -7,10 +7,13 @@ import asyncio
 import os
 from dotenv import load_dotenv
 import pytz
+from discord_buttons_plugin import *
 
 load_dotenv()
 
 bot = commands.Bot(command_prefix='pog ')
+
+buttons = ButtonsClient(bot)
 
 server_ip = os.getenv("SERVERIP")
 server = MinecraftServer.lookup(server_ip) #poggerchair IP: 95.142.162.123:25565
@@ -70,7 +73,23 @@ async def players(ctx):
     embed.add_field(name='Ping', value=status.latency, inline=True)
     if status.players.online > 0:
         embed.add_field(name='Player List', value="\n ".join(query.players.names), inline=False)
-    await ctx.send(embed=embed)     
+    await ctx.send(embed=embed)   
+    
+@bot.command()
+async def github(ctx):
+    await buttons.send(
+        content = "**View on Github**",
+        channel = ctx.channel.id,
+        components = [
+            ActionRow([
+                Button(
+                    label = "Github",
+                    style = ButtonType().Link,
+                    url="https://github.com/ajsya/PoggerchairBot"
+                )
+            ])
+        ]
+    )      
 
 TOKEN = os.getenv("TOKEN")
 bot.run(TOKEN)
