@@ -31,18 +31,7 @@ async def on_ready():
     print(bot.user.id)
     print('------')
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name='poggerchair'))
-    await request()
-
-@bot.command()
-async def ping(ctx):
-    await ctx.send(":ping_pong: Pong!")
-
-@bot.command()
-async def playerCount(ctx):
-        server = MinecraftServer.lookup(server_ip) #poggerchair IP: 95.142.162.123:25565
-        status = server.status()
-        await ctx.send("The server has {0} players and replied in {1} ms".format(status.players.online, status.latency))
-        print("The server has {0} players and replied in {1} ms".format(status.players.online, status.latency))       
+    await request()     
 
 TOKEN = os.getenv("TOKEN")
 bot.run(TOKEN)
