@@ -5,6 +5,7 @@ Originally created for the Chair of Republic's Minecraft server (poggerchair), t
 ## Requirements
 - Python3
 - Python Pip
+- Git
 - Basic Understanding of Python
 - Discord Bot Account
 
