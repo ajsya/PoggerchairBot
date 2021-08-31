@@ -1,14 +1,19 @@
 ![](Screenshot.jpeg)
 # PoggerchairBot
-Originally created for the Chair of Republic server, this bot updates a discord channels topic with the player count every 5 minutes
+Originally created for the Chair of Republic's Minecraft server (poggerchair), this bot updates a discord channels topic with the player count every 5 minutes
+
+## Requirements
+- Python3
+- Python Pip
+- Basic Understanding of Python
+- Discord Bot Account
 
 ## Setup
-### Install the [requirements](https://github.com/ajsya/PoggerchairBot/blob/main/requirements.txt)
-### Download bot.py and the example .env file from this repo
-### Open the files and Edit the variables
-There should be two variables you need to edit in .env and one in bot.py for the bot to work...
-1. SERVERIP > enter your minecraft server's IP in the ""
-2. TOKEN > enter your bot account's token in the ""
-<br /> <br />
-3. channel > replace the number with your discord channel's id in the ()
-### Run bot.py!
+```bash
+$ git clone https://github.com/ajsya/PoggerchairBot.git/
+$ cd PoggerchairBot
+$ python3 pip install -r requirements.txt
+$ nano .env #edit variables (SERVERIP & TOKEN)
+$ nano bot.py #edit variable (scroll down to the variable listed "channel")
+$ python3 bot.py
+```
