@@ -24,16 +24,25 @@ async def request():
         tz_NY = pytz.timezone('America/New_York') 
         datetime_NY = datetime.now(tz_NY)
         today = date.today()
-        status = server.status()
-        tosay = "\nDate: {0} Time: {1} Players: {2} Latency: {3}".format(today, datetime_NY.strftime("%H:%M:%S"), status.players.online, status.latency)
-        channel = bot.get_channel(841751991088971827) # REPLACE THE CHANNEL ID WITH YOURS 841751991088971827 876187825995919410
         try:
+            status = server.status()
+            query = server.query()
+            tosay = "\nDate: {0} Time: {1} Players: {2} Latency: {3}".format(today, datetime_NY.strftime("%H:%M:%S"), status.players.online, status.latency)
+            channel = bot.get_channel(841751991088971827) # REPLACE THE CHANNEL ID WITH YOURS 841751991088971827 876187825995919410
             await channel.edit(topic=str("{0}/20 players online | Last Edited at {1} EST".format(status.players.online, datetime_NY.strftime("%H:%M:%S"))), reason="Automatic Edit: Player Count Changed")
         except TimeoutError:
             await channel.send("Channel Topic could not be changed: Timeout Error")
         except:
             await channel.send("A unknown error occured while trying to update the channel's topic.")
-        file1.write(tosay)
+
+        if status.players.online > 0:
+            players = ", ".join(query.players.names)    
+            tosay = "\nDate: {0} Time: {1} Players: {2}, {3} Latency: {4}".format(today, datetime_NY.strftime("%H:%M:%S"), status.players.online, players, status.latency)
+        
+            file1.write(tosay)
+        else:
+            tosay = "\nDate: {0} Time: {1} Players: {2} Latency: {3}".format(today, datetime_NY.strftime("%H:%M:%S"), status.players.online, status.latency)
+            file1.write(tosay)  
         print("The server has {0} players and replied in {1} ms".format(status.players.online, status.latency))
         file1.close()
         await asyncio.sleep(300)
