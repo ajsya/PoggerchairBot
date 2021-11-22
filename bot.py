@@ -27,7 +27,7 @@ async def request():
         today = date.today()
         status = server.status()
         tosay = "\nDate: {0} Time: {1} Players: {2} Latency: {3}".format(today, datetime_NY.strftime("%H:%M:%S"), status.players.online, status.latency)
-        channel = bot.get_channel(channel_id)
+        channel = bot.get_channel(int(channel_id))
         try:
             await channel.edit(topic=str("{0}/20 players online | Last Edited at {1} EST".format(status.players.online, datetime_NY.strftime("%H:%M:%S"))), reason="Automatic Edit: Player Count Changed")
         except TimeoutError:
