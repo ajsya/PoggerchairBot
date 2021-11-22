@@ -16,6 +16,7 @@ bot = commands.Bot(command_prefix='pog ')
 buttons = ButtonsClient(bot)
 
 server_ip = os.getenv("SERVERIP")
+channel_id = os.getenv("CHANNELID")
 server = MinecraftServer.lookup(server_ip) #poggerchair IP: 95.142.162.123:25565
 
 async def request():
@@ -26,7 +27,7 @@ async def request():
         today = date.today()
         status = server.status()
         tosay = "\nDate: {0} Time: {1} Players: {2} Latency: {3}".format(today, datetime_NY.strftime("%H:%M:%S"), status.players.online, status.latency)
-        channel = bot.get_channel(876187825995919410) # REPLACE THE CHANNEL ID WITH YOURS 841751991088971827 876187825995919410
+        channel = bot.get_channel(channel_id)
         try:
             await channel.edit(topic=str("{0}/20 players online | Last Edited at {1} EST".format(status.players.online, datetime_NY.strftime("%H:%M:%S"))), reason="Automatic Edit: Player Count Changed")
         except TimeoutError:
