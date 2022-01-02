@@ -87,7 +87,6 @@ async def players(ctx):
         title = 'Poggerchair',
         description = to_say,
         color = discord.Color.from_rgb(255, 103, 76))
-
     embed.set_footer(text='{0} | PogBot is a project by @SharkBaitBilly#5270'.format(datetime_NY.strftime("%H:%M:%S")))
     embed.set_thumbnail(url='https://cdn.discordapp.com/attachments/876187825995919410/879860894258044948/pogbot.png')
     #embed.set_author(name='Bot Template',
@@ -106,9 +105,15 @@ async def poggerchair(ctx):
     query = server.query()
     tz_NY = pytz.timezone('America/New_York') 
     datetime_NY = datetime.now(tz_NY)
+    if status.players.online == 0:
+        to_say = "There is currently {0} players online.".format(status.players.online)
+    elif status.players.online == 1:
+        to_say ="There is currently {0} player online.".format(status.players.online)
+    else:
+        to_say = "There are currently {0} players online.".format(status.players.online)
     embed = discord.Embed(
         title = 'Poggerchair',
-        description = "There is currently {0} player(s) online.".format(status.players.online),
+        description = to_say,
         color = discord.Color.from_rgb(255, 103, 76))
 
     embed.set_footer(text='{0} | PogBot is a project by @SharkBaitBilly#5270'.format(datetime_NY.strftime("%H:%M:%S")))
