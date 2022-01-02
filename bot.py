@@ -53,7 +53,15 @@ async def on_ready():
 
 @bot.command()
 async def ping(ctx):
+    server = MinecraftServer.lookup(server_ip)
+    ping = server.ping()
     await ctx.send(":ping_pong: Pong!")
+    await ctx.send("The server responded in {0} ms.".format(ping))
+
+@bot.command()
+async def ip(ctx):
+    await ctx.send("**95.142.162.123 - 1.17.1**")
+    await ctx.send("_Ask to be whitelisted in #poggerchair!_")
 
 @bot.command()
 async def playerCount(ctx):
@@ -69,9 +77,15 @@ async def players(ctx):
     query = server.query()
     tz_NY = pytz.timezone('America/New_York') 
     datetime_NY = datetime.now(tz_NY)
+    if status.players.online == 0:
+        to_say = "There is currently {0} players online.".format(status.players.online)
+    elif status.players.online == 1:
+        to_say ="There is currently {0} player online.".format(status.players.online)
+    else:
+        to_say = "There are currently {0} players online.".format(status.players.online)
     embed = discord.Embed(
         title = 'Poggerchair',
-        description = "There is currently {0} player(s) online.".format(status.players.online),
+        description = to_say,
         color = discord.Color.from_rgb(255, 103, 76))
 
     embed.set_footer(text='{0} | PogBot is a project by @SharkBaitBilly#5270'.format(datetime_NY.strftime("%H:%M:%S")))
@@ -79,9 +93,10 @@ async def players(ctx):
     #embed.set_author(name='Bot Template',
     #icon_url='')
     embed.add_field(name='Player Count', value="{0}/{1}".format(status.players.online, status.players.max), inline=True)
-    embed.add_field(name='Ping', value=status.latency, inline=True)
+    embed.add_field(name='Ping', value=str(status.latency) + " ms", inline=True)
     if status.players.online > 0:
         embed.add_field(name='Player List', value="\n ".join(query.players.names), inline=False)
+    embed.add_field(name='Server Version', value=query.software.version, inline=True)
     await ctx.send(embed=embed)
 
 @bot.command()
@@ -101,9 +116,10 @@ async def poggerchair(ctx):
     #embed.set_author(name='Bot Template',
     #icon_url='')
     embed.add_field(name='Player Count', value="{0}/{1}".format(status.players.online, status.players.max), inline=True)
-    embed.add_field(name='Ping', value=status.latency, inline=True)
+    embed.add_field(name='Ping', value=str(status.latency), inline=True)
     if status.players.online > 0:
         embed.add_field(name='Player List', value="\n ".join(query.players.names), inline=False)
+    embed.add_field(name='Server Version', value=query.software.version, inline=True)
     await ctx.send(embed=embed)
 
 @bot.command()
